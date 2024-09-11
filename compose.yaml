@@ -13,7 +13,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./target/SberBank-0.0.1-SNAPSHOT.jar:/app/SberBank-0.0.1-SNAPSHOT.jar
+      - ./target/BankingApp-0.0.1-SNAPSHOT.jar:/app/BankingApp-0.0.1-SNAPSHOT.jar
     entrypoint: ["java", "-jar", "/app/BankingApp-0.0.1-SNAPSHOT.jar"]
     depends_on:
       - builder
