@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ru.sbrf.java.edu</groupId>
-    <artifactId>SberBank</artifactId>
+    <artifactId>BankingApp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>SberBank</name>
-    <description>SberBank</description>
+    <name>BankingApp</name>
+    <description>BankingApp</description>
     <url/>
     <licenses>
         <license/>

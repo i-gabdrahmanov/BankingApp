@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.sbrf.edu.sberbank.annotation.ExecutionLogger;
 import ru.sbrf.edu.sberbank.dto.*;
 import ru.sbrf.edu.sberbank.exception.Sberception;
 import ru.sbrf.edu.sberbank.service.BankAccountService;
@@ -19,10 +20,9 @@ public class BankAccountController {
     private final BankAccountService bankAccountService;
 
     @GetMapping("/{id}")
+    @ExecutionLogger
     public ResponseEntity<BankAccountResponse> getBankAccount(@PathVariable Long id) {
-        log.info("Вызван метод getBankAccount с параметром id: %d".formatted(id));
         BankAccountResponse response = bankAccountService.getBankAccount(id);
-        log.info("Выполнен метод getBankAccount с параметром id: %d".formatted(id));
         return ResponseEntity.ok(response);
     }
 
@@ -44,11 +44,9 @@ public class BankAccountController {
     }
 
     @PostMapping("{accountId}/fillMoney")
+    @ExecutionLogger
     public ResponseEntity<Void> fillMoney(@PathVariable Long accountId, @RequestBody FillMoneyRequest request) {
-        log.info("Вызван метод fillMoney с параметром accountId: %d, appendSum: %f".formatted(accountId, request.getAppendSum()));
         bankAccountService.fillMoney(accountId, request);
-        log.info("Выполнен метод fillMoney с параметром accountId: %d, appendSum: %f".formatted(accountId, request.getAppendSum()));
-
         return ResponseEntity.ok().build();
     }
 
