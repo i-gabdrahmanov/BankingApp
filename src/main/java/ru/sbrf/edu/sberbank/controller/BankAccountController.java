@@ -3,6 +3,7 @@ package ru.sbrf.edu.sberbank.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +20,9 @@ public class BankAccountController {
 
     private final BankAccountService bankAccountService;
 
-    @GetMapping("/{id}")
+    @GetMapping
     @ExecutionLogger
-    public ResponseEntity<BankAccountResponse> getBankAccount(@PathVariable Long id) {
+    public ResponseEntity<BankAccountResponse> getBankAccount(@Param("id") Long id) {
         BankAccountResponse response = bankAccountService.getBankAccount(id);
         return ResponseEntity.ok(response);
     }

@@ -15,3 +15,5 @@
 - api/account/{personId}/create - создание банковского аккаунта, его привязка к пользователю
 - api/account/{accountId}/sendTo - отправка средств на другой банковский аккаунт
 - api/account/{accountId}/fillMoney - поплнение средств
+  
+Starting: docker compose up --build

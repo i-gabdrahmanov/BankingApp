@@ -7,9 +7,9 @@ import ru.sbrf.edu.sberbank.dto.*;
 import ru.sbrf.edu.sberbank.exception.Sberception;
 import ru.sbrf.edu.sberbank.mapper.BankAccountMapper;
 import ru.sbrf.edu.sberbank.model.BankAccount;
-import ru.sbrf.edu.sberbank.service.BankAccountService;
 import ru.sbrf.edu.sberbank.repository.BankAccountRepository;
 import ru.sbrf.edu.sberbank.repository.PersonRepository;
+import ru.sbrf.edu.sberbank.service.BankAccountService;
 
 @Service
 @Slf4j

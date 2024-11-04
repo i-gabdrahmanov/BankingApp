@@ -5,6 +5,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -14,14 +15,18 @@ import java.util.Arrays;
 @Slf4j
 public class LoggingAspect {
 
-    @Before("@annotation(ru.sbrf.edu.sberbank.annotation.ExecutionLogger)")
+    @Pointcut("@within(ru.sbrf.edu.sberbank.annotation.ExecutionLogger) || " +
+            "@annotation(ru.sbrf.edu.sberbank.annotation.ExecutionLogger)")
+    public void executionLoggerPointcut() {}
+
+    @Before("executionLoggerPointcut()")
     public void logBefore(JoinPoint joinPoint) {
         log.info("Вызван метод " + joinPoint.getSignature().getName() +
                 " в классе " + joinPoint.getThis().getClass().getTypeName() +
                 " с параметрами " + Arrays.toString(joinPoint.getArgs()));
     }
 
-    @After(value = "@annotation(ru.sbrf.edu.sberbank.annotation.ExecutionLogger)")
+    @After(value = "executionLoggerPointcut()")
     public void logAfter(JoinPoint joinPoint) {
         log.info("Exiting method: " + joinPoint.getSignature().getName());
     }

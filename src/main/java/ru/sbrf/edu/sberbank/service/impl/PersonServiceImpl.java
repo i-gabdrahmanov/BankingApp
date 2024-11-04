@@ -3,11 +3,11 @@ package ru.sbrf.edu.sberbank.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.sbrf.edu.sberbank.exception.Sberception;
-import ru.sbrf.edu.sberbank.model.Person;
 import ru.sbrf.edu.sberbank.dto.PersonDtoResponse;
 import ru.sbrf.edu.sberbank.dto.RegisterPersonRequest;
 import ru.sbrf.edu.sberbank.dto.UpdatePersonDto;
+import ru.sbrf.edu.sberbank.exception.Sberception;
+import ru.sbrf.edu.sberbank.model.Person;
 import ru.sbrf.edu.sberbank.repository.PersonRepository;
 import ru.sbrf.edu.sberbank.service.PersonService;
 

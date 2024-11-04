@@ -97,7 +97,7 @@ public class PersonControllerTest {
 
         when(personService.getPerson(id)).thenReturn(response);
 
-        mockMvc.perform(get("/api/person/" + id))
+        mockMvc.perform(get("/api/person?id=" + id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("name"))
                 .andExpect(jsonPath("$.personId").value(1L))
@@ -114,7 +114,7 @@ public class PersonControllerTest {
         Mockito.doThrow(new Sberception("test")).when(personService).getPerson(anyLong());
 
         long id = 1L;
-        mockMvc.perform(get("/api/person/" + id)
+        mockMvc.perform(get("/api/person?id=" + id)
                         .content("""
                                 {
                                         "name": "name"

@@ -50,7 +50,7 @@ public class BankAccountControllerTest {
                 BigDecimal.valueOf(1.0), CurrencyEnum.USD);
         when(bankAccountService.getBankAccount(accountId)).thenReturn(response);
 
-        mockMvc.perform(get("/api/account/{id}", accountId))
+        mockMvc.perform(get("/api/account?id=" + accountId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.currentSum").value(new BigDecimal("2.0")));
@@ -63,7 +63,7 @@ public class BankAccountControllerTest {
         Long accountId = 1L;
 
         Mockito.doThrow(new Sberception("test")).when(bankAccountService).getBankAccount(any());
-        mockMvc.perform(get("/api/account/{id}", accountId))
+        mockMvc.perform(get("/api/account?id=" + accountId))
                 .andExpect(status().isIAmATeapot());
 
         verify(bankAccountService, times(1)).getBankAccount(accountId);
@@ -144,7 +144,7 @@ public class BankAccountControllerTest {
     public void testSberceptionHandler() throws Exception {
         when(bankAccountService.getBankAccount(any())).thenThrow(new Sberception("Test exception"));
 
-        mockMvc.perform(get("/api/account/{id}", 1L))
+        mockMvc.perform(get("/api/account?id=876", 1L))
                 .andExpect(status().isIAmATeapot());
 
     }
