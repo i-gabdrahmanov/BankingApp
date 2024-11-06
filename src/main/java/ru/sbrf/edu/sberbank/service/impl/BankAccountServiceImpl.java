@@ -3,6 +3,7 @@ package ru.sbrf.edu.sberbank.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.sbrf.edu.sberbank.annotation.ExecutionLogger;
 import ru.sbrf.edu.sberbank.dto.*;
 import ru.sbrf.edu.sberbank.exception.Sberception;
 import ru.sbrf.edu.sberbank.mapper.BankAccountMapper;
@@ -21,6 +22,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     private final BankAccountMapper mapper;
 
     @Override
+    @ExecutionLogger(exclude = true)
     public BankAccountResponse getBankAccount(Long id) {
         // log.info();
         BankAccount bankAccount = bankAccountRepository.findById(id).orElseThrow(
