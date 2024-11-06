@@ -22,7 +22,7 @@ public class LoggingAspect {
     @Before("executionLoggerPointcut()")
     public void logBefore(JoinPoint joinPoint) {
         log.info("Вызван метод " + joinPoint.getSignature().getName() +
-                " в классе " + joinPoint.getThis().getClass().getTypeName() +
+                " в классе " + joinPoint.getTarget().getClass().getSimpleName() +
                 " с параметрами " + Arrays.toString(joinPoint.getArgs()));
     }
 
