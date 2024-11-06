@@ -71,13 +71,13 @@ public class PersonServiceImpl implements PersonService {
         ArrayList<Field> fields = new ArrayList<>(parentFieldslist);
         fields.addAll(childFieldslist);
         for (Field requestField : fields) {
-            requestField.setAccessible(true); // Делаем поле доступным
+            requestField.setAccessible(true);
             try {
                 Object value = requestField.get(request);
-                if (value != null) { // Проверяем, что поле не null
+                if (value != null) {
                     Field userField = Person.class.getDeclaredField(requestField.getName());
                     userField.setAccessible(true);
-                    userField.set(person, value); // Обновляем поле сущности
+                    userField.set(person, value);
                 }
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 e.printStackTrace();
