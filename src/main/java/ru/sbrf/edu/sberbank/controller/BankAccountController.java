@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import ru.sbrf.edu.sberbank.annotation.Benchmark;
 import ru.sbrf.edu.sberbank.annotation.ExecutionLogger;
 import ru.sbrf.edu.sberbank.dto.*;
 import ru.sbrf.edu.sberbank.exception.Sberception;
@@ -24,6 +25,7 @@ public class BankAccountController {
     @GetMapping
     @Transactional
     @ExecutionLogger
+    @Benchmark
     public ResponseEntity<BankAccountResponse> getBankAccount(@Param("id") Long id) {
         BankAccountResponse response = bankAccountService.getBankAccount(id);
         return ResponseEntity.ok(response);
