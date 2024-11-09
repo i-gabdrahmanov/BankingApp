@@ -4,14 +4,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import ru.sbrf.edu.sberbank.annotation.Benchmark;
 import ru.sbrf.edu.sberbank.annotation.ExecutionLogger;
 import ru.sbrf.edu.sberbank.dto.*;
-import ru.sbrf.edu.sberbank.exception.Sberception;
 import ru.sbrf.edu.sberbank.service.BankAccountService;
 
 @RequiredArgsConstructor
@@ -25,7 +22,6 @@ public class BankAccountController {
     @GetMapping
     @Transactional
     @ExecutionLogger
-    @Benchmark
     public ResponseEntity<BankAccountResponse> getBankAccount(@Param("id") Long id) {
         BankAccountResponse response = bankAccountService.getBankAccount(id);
         return ResponseEntity.ok(response);
@@ -55,10 +51,5 @@ public class BankAccountController {
         return ResponseEntity.ok().build();
     }
 
-    @ExceptionHandler({Sberception.class})
-    @ResponseBody
-    @ResponseStatus(value = HttpStatus.I_AM_A_TEAPOT)
-    public void sberceptionHandler(Sberception ex) {
-        log.error(ex.getMessage());
-    }
+
 }
