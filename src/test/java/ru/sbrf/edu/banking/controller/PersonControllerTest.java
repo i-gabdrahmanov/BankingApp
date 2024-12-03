@@ -35,7 +35,8 @@ public class PersonControllerTest {
 
     @BeforeEach
     public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(personController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(personController)
+                .setControllerAdvice(CommonControllerAdvice.class).build();
     }
 
     @Test

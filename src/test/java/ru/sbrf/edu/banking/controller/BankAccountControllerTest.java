@@ -40,7 +40,8 @@ public class BankAccountControllerTest {
 
     @BeforeEach
     public void setUp() {
-        mockMvc = standaloneSetup(bankAccountController).build();
+        mockMvc = standaloneSetup(bankAccountController)
+                .setControllerAdvice(CommonControllerAdvice.class).build();
     }
 
     @Test

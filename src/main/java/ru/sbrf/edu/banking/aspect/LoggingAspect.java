@@ -25,13 +25,27 @@ public class LoggingAspect {
 
     @Before("executionLoggerPointcut()")
     public void logBefore(JoinPoint joinPoint) {
+        Class<?> clazz = joinPoint.getThis().getClass();
+
+        // Проверяем, является ли класс прокси от CGLIB
+        if (clazz.getName().contains("$$")) {
+            System.out.println("Используется CGLIB прокси");
+        }
+        // Проверяем, является ли класс JDK динамическим прокси
+        else if (java.lang.reflect.Proxy.isProxyClass(clazz)) {
+            System.out.println("Используется JDK динамическое прокси");
+        } else {
+            System.out.println("Неизвестный тип прокси");
+        }
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
-        ExecutionLogger executionLogger = method.getAnnotation(ExecutionLogger.class);
+        ExecutionLogger executionLogger = method.getAnnotation(ExecutionLogger.class) == null
+                ? joinPoint.getTarget().getClass().getAnnotation(ExecutionLogger.class)
+                : method.getAnnotation(ExecutionLogger.class);
         if (executionLogger != null && !executionLogger.exclude()) {
             log.info("Вызван метод: {} в классе: {} с параметрами: {}",
                     joinPoint.getSignature().getName(),
-                    joinPoint.getTarget().getClass().getSimpleName(),
+                    joinPoint.getThis().getClass().getName(),
                     Arrays.toString(joinPoint.getArgs()));
         }
     }

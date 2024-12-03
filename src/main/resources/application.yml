@@ -15,4 +15,7 @@ spring:
       hibernate:
         format_sql: true
         use_sql_comments: true
-
+logging:
+  level:
+    root: INFO
+    ru.sbrf.edu.banking.controller: INFO

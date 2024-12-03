@@ -1,10 +1,7 @@
 package ru.sbrf.edu.banking.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.sbrf.edu.banking.annotation.Benchmark;
-import ru.sbrf.edu.banking.annotation.ExceptionAudit;
 import ru.sbrf.edu.banking.annotation.ExecutionLogger;
 import ru.sbrf.edu.banking.dto.*;
 import ru.sbrf.edu.banking.exception.Sberception;
@@ -15,8 +12,8 @@ import ru.sbrf.edu.banking.repository.PersonRepository;
 import ru.sbrf.edu.banking.service.BankAccountService;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
+@ExecutionLogger
 public class BankAccountServiceImpl implements BankAccountService {
 
     private final BankAccountRepository bankAccountRepository;
@@ -24,16 +21,13 @@ public class BankAccountServiceImpl implements BankAccountService {
     private final BankAccountMapper mapper;
 
     @Override
-    @Benchmark
-    @ExceptionAudit
-    @ExecutionLogger(exclude = true)
+
     public BankAccountResponse getBankAccount(Long id) {
-        // log.info();
         BankAccount bankAccount = getActualBankAccount(id);
-        // log.info();
         return mapper.toBankAccountResponse(bankAccount);
     }
-    private BankAccount getActualBankAccount(Long id){
+
+    private BankAccount getActualBankAccount(Long id) {
         return bankAccountRepository.findById(id).orElseThrow(
                 () -> new Sberception(String.format("Банковский аккаунт с id: %d не найден", id))
         );

@@ -8,11 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.sbrf.edu.banking.annotation.ExecutionLogger;
+import ru.sbrf.edu.banking.dto.PersonDtoResponse;
 import ru.sbrf.edu.banking.dto.RegisterPersonRequest;
 import ru.sbrf.edu.banking.dto.UpdatePersonDto;
 import ru.sbrf.edu.banking.exception.Sberception;
 import ru.sbrf.edu.banking.service.PersonService;
-import ru.sbrf.edu.banking.dto.PersonDtoResponse;
 
 @RestController
 @Slf4j
@@ -23,7 +23,9 @@ public class PersonController {
     private final PersonService personService;
 
     @PostMapping("register")
-    public ResponseEntity<PersonDtoResponse> registerPerson(@RequestBody @Valid RegisterPersonRequest request) {
+    public ResponseEntity<PersonDtoResponse> registerPerson(@RequestBody
+                                                            @Valid
+                                                            RegisterPersonRequest request) {
         PersonDtoResponse response = personService.createPerson(request);
         return ResponseEntity.ok(response);
     }

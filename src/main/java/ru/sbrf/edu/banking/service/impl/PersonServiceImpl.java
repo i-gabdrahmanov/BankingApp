@@ -7,9 +7,11 @@ import ru.sbrf.edu.banking.dto.PersonDtoResponse;
 import ru.sbrf.edu.banking.dto.RegisterPersonRequest;
 import ru.sbrf.edu.banking.dto.UpdatePersonDto;
 import ru.sbrf.edu.banking.exception.Sberception;
+import ru.sbrf.edu.banking.model.Department;
 import ru.sbrf.edu.banking.model.Person;
 import ru.sbrf.edu.banking.repository.PersonRepository;
 import ru.sbrf.edu.banking.service.PersonService;
+import ru.sbrf.edu.banking.service.TaskGenerator;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ import java.util.List;
 public class PersonServiceImpl implements PersonService {
 
     private final PersonRepository personRepository;
+    private final TaskGenerator taskGenerator;
 
     @Override
     public PersonDtoResponse createPerson(RegisterPersonRequest request) {
@@ -32,6 +35,7 @@ public class PersonServiceImpl implements PersonService {
                     .patronymic(request.getPatronymic())
                     .inn(request.getInn())
                     .build();
+            taskGenerator.generateDailyTaskForArch(new ArrayList<>(), new Department(1L, "test"));
             return createPersonDtoResponse(personRepository.save(person));
         } else {
             throw new Sberception("Пользователь с таким ИНН уже зарегистрирован");

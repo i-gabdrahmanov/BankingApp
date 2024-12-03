@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ru.sbrf.edu.banking.annotation.ExecutionLogger;
 import ru.sbrf.edu.banking.dto.*;
@@ -20,18 +19,15 @@ public class BankAccountController {
     private final BankAccountService bankAccountService;
 
     @GetMapping
-    @Transactional
-    @ExecutionLogger
     public ResponseEntity<BankAccountResponse> getBankAccount(@Param("id") Long id) {
         BankAccountResponse response = bankAccountService.getBankAccount(id);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("{personId}/create")
-    public ResponseEntity<Void> createAccount(@PathVariable Long personId, @RequestBody @Valid CreateAccountRequest request) {
-        log.info("Вызван метод createAccount с параметром personId: %d".formatted(personId));
+    public ResponseEntity<Void> createAccount(@PathVariable Long personId,
+                                              @RequestBody @Valid CreateAccountRequest request) {
         bankAccountService.createBankAccount(personId, request);
-        log.info("Выполнен метод createAccount с параметром personId: %d".formatted(personId));
         return ResponseEntity.ok().build();
     }
     // todo put patch delete
