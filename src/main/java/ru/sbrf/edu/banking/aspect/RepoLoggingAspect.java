@@ -23,7 +23,6 @@ public class RepoLoggingAspect {
     @Around("repositoryPointcut()")
     public Object repositoryQueryCheckup(ProceedingJoinPoint joinPoint) {
         Object result;
-        int collectionSize = 0;
         try {
             result = joinPoint.proceed();
         } catch (Throwable e) {
@@ -34,11 +33,10 @@ public class RepoLoggingAspect {
         String methodName = methodSignature.getName();
         Class<?> returnType = methodSignature.getReturnType();
         if (returnType.isAssignableFrom(Collection.class)) {
-            for (Object o : (Collection) result) {
-                collectionSize++;
-                log.info("Метод {} вызван с параметрами {}, вернул коллекцию размером {} элементов",
-                       methodName, Arrays.toString(args), collectionSize);
-            }
+            Collection<?> resultCollection = (Collection<?>) result;
+            int collectionSize = resultCollection.size();
+            log.info("Метод {} вызван с параметрами {}, вернул коллекцию размером {} элементов",
+                    methodName, Arrays.toString(args), collectionSize);
         }
         return result;
     }
